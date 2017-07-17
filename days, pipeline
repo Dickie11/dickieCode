@@ -1,0 +1,42 @@
+function myFunction() {
+    var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1zQHmusx0pcHz4EPYcdmrLeJarWI7LFw5fCVfYDsTL_k/edit#gid=0");
+    for(var p = 1; p < 4; p++) {
+        ss.setActiveSheet(ss.getSheets()[p]);
+        ss.getDataRange().clear();
+    }
+    ss.setActiveSheet(ss.getSheets()[0]);
+    var dataRange   = ss.getDataRange();
+    var todayDate   = new Date();
+    var dateConv    = 1000*60*60*24;
+    var sheet       = ss.getSheetByName('Active'); 
+    var sheet30     = ss.getSheetByName('30day'); 
+    var sheet45     = ss.getSheetByName('45day'); 
+    var sheet3060   = ss.getSheetByName('30-60'); 
+    var sheet6090   = ss.getSheetByName('60-90'); 
+    var sheet90     = ss.getSheetByName('90+'); 
+    
+
+    for ( var i = 0; i < dataRange.getNumRows(); i++){ 
+    
+
+
+      var range       = sheet.getRange('A1:A60'); 
+        var loanDate    = range.getValue();
+        var msBetweenDates = loanDate - todayDate;
+        var dateDiff    = msBetweenDates/dateConv;
+ 
+
+        if (dateDiff < 31.0){
+            sheet30.appendRow(loanDate); 
+        }else if (dateDiff < 46.0){
+            sheet45.appendRow(loanDate); 
+        }else if ((dateDiff > 29.0) && (dateDiff < 61.0)){
+            sheet3060.appendRow(loanDate);
+        }else if (dateDiff > 59.0 && dateDiff < 91.0){
+            sheet6090.appendRow(range);
+        }else if (dateDiff > 89.0){
+            sheet90.appendRow(loanDate);
+        }
+    }
+}
+      
