@@ -1,6 +1,6 @@
 function myFunction() {
     var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1zQHmusx0pcHz4EPYcdmrLeJarWI7LFw5fCVfYDsTL_k/edit#gid=0");
-    for(var p = 1; p < 4; p++) {
+    for(var p = 1; p < 6; p++) {
         ss.setActiveSheet(ss.getSheets()[p]);
         ss.getDataRange().clear();
     }
@@ -20,10 +20,10 @@ function myFunction() {
     
 
 
-        var range       = sheet.getRange(1, i+1); 
+        var range       = sheet.getRange(i+1, 1); 
         var loanDate    = range.getValue();
-        var lDate       = new Date(loanDate);
-        var msBetweenDates = lDate - todayDate;
+        var lDate       = Date(range);
+        var msBetweenDates = todayDate - loanDate;
         var dateDiff    = msBetweenDates/dateConv;
       
         var spreadSheet = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/1zQHmusx0pcHz4EPYcdmrLeJarWI7LFw5fCVfYDsTL_k/edit#gid=0');
